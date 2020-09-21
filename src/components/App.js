@@ -9,6 +9,7 @@ import LandingPage from './LandingPage';
 
 function App() {
   const [display, setDisplay] = useState(d.LANDING_PAGE);
+  const [selectedSurvey, setSelectedSurvey] = useState(null);
 
   let pageToDisplay;
   if (display === d.CREATE) {
@@ -18,9 +19,11 @@ function App() {
   } else if (display === d.SURVEY) {
     pageToDisplay = <Survey />
   } else if (display === d.SURVEY_RESULT) {
-    pageToDisplay = <SurveyResults />
+    pageToDisplay = <SurveyResults survey={selectedSurvey} />
   } else if (display === d.LANDING_PAGE) {
-    pageToDisplay = <LandingPage />  
+    pageToDisplay = <LandingPage
+                      onClickingLink={setDisplay}
+                      onChangingSurvey={setSelectedSurvey} />  
   }
   
   return (

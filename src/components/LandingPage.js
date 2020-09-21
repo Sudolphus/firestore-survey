@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -30,10 +31,11 @@ const survey3 = {
 
 const surveys = [survey1, survey2, survey3];
 
-function LandingPage() {
+function LandingPage(props) {
   const user = 'user1';
   const userSurveys = surveys.filter(survey => survey['user'] === user);
   const otherSurveys = surveys.filter(survey => survey['user'] !== user);
+  
   return (
     <React.Fragment>
       <Row>
@@ -41,7 +43,10 @@ function LandingPage() {
           <Button variant='info' type='button'>Create a Survey!</Button>
           <SurveyList 
             surveys={userSurveys}
-            user={true} />
+            user={true}
+            onChangingSurvey={props.onChangingSurvey}
+            onClickingLink={props.onClickingLink}
+            />
         </Col>
         <Col>
           <SurveyList 
@@ -51,6 +56,11 @@ function LandingPage() {
       </Row>
     </React.Fragment>
   )
+}
+
+LandingPage.propTypes = {
+  onClickingLink: PropTypes.func,
+  onChangingSurvey: PropTypes.func
 }
 
 export default LandingPage;
