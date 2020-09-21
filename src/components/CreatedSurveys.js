@@ -6,13 +6,16 @@ const dummySurvey = ["sillySurvey", "seriousSurvey", "toManyQuestionSurvey"]
 function CreatedSurveys() {
   return (
     <React.Fragment>
+      <ol>
       {dummySurvey.map((survey, index) =>
-        <div key={index}>
-          <a>{survey}</a>
+        <li key={index}>
+          <Button as='a'>{survey}</Button>
+          <Button variant='info' type='button'>View Results</Button>
           <Button variant='warning' type='button'>Edit</Button>
           <Button variant='danger' type='button'>Delete</Button>
-        </div>
+        </li>
       )}
+      </ol>
     </React.Fragment>
   )
 }
