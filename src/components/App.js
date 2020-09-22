@@ -19,7 +19,9 @@ function App() {
   } else if (display === d.SURVEY) {
     pageToDisplay = <Survey />
   } else if (display === d.SURVEY_RESULT) {
-    pageToDisplay = <SurveyResults survey={selectedSurvey} />
+    pageToDisplay = <SurveyResults 
+                      survey={selectedSurvey}
+                      onClickingLink={setDisplay} />
   } else if (display === d.LANDING_PAGE) {
     pageToDisplay = <LandingPage
                       onClickingLink={setDisplay}

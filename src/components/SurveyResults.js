@@ -1,27 +1,32 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import * as d from './DisplayTypes';
 import Button from 'react-bootstrap/Button';
 
-const dummy1 = ['yes', 'no', 'maybe'];
-const dummy2 = ['true', 'false', 'i hate this'];
-const responses = [{question: 'question 1', answers: dummy1}, {question: 'question 2', answers: dummy2}];
-
-function SurveyResults() {
+function SurveyResults(props) {
+  const { survey, onClickingLink } = props;
+  const { title, questions, answers } = survey;
   return (
     <React.Fragment>
-      <h2>Survey Title</h2>
-      {responses.map((response, index) => (
+      <h2>{title}</h2>
+      {questions.map((question, index) => (
         <div key={'div' + index}>
-          <p>{response.question}</p>
+          <p>{question}</p>
           <ol>
-            {response.answers.map((answer, index2) => 
+            {answers[index].map((answer, index2) => 
               <li key={'li' + index + index2}>{answer}</li>
             )}
           </ol>
         </div>
       ))}
-    <Button variant='danger' type='button'>Your Survey List</Button>
+    <Button variant='danger' type='button' onClick={()=>onClickingLink(d.LANDING_PAGE)}>Your Survey List</Button>
     </React.Fragment>
   )
+}
+
+SurveyResults.propTypes = {
+  survey: PropTypes.object,
+  onClickingLink: PropTypes.func
 }
 
 export default SurveyResults;
