@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as d from './DisplayTypes';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -40,7 +41,7 @@ function LandingPage(props) {
     <React.Fragment>
       <Row>
         <Col>
-          <Button variant='info' type='button'>Create a Survey!</Button>
+          <Button variant='info' type='button' onClick={()=>{props.onClickingLink(d.CREATE)}}>Create a Survey!</Button>
           <SurveyList 
             surveys={userSurveys}
             user={true}
