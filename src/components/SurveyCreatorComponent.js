@@ -4,10 +4,11 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 function SurveyCreatorComponent(props) {
+  const { surveyToEdit, initialState } = props;
   const [questionsToAsk, setQuestionsToAsk] = useState(1);
-  const [formData, setFormData] = useState([]);
-  //const [surveyIdCounter, setSurveyId] = useState(1);
-  
+  const [formData, setFormData] = useState(initialState);
+  const defaultTitle = surveyToEdit ? surveyToEdit.title : null;
+
   const addQuestionToSurvey = () => {
     setQuestionsToAsk(questionsToAsk + 1);
     const newInput = { id: `question${questionsToAsk}`, value: ''};
@@ -42,7 +43,7 @@ function SurveyCreatorComponent(props) {
       <Form onSubmit = {onSubmittingSurvey}>
         <Form.Group controlId = 'title'>
           <Form.Label>Title for your survey</Form.Label>
-          <Form.Control type='text' />
+          <Form.Control type='text' defaultValue = {defaultTitle} />
         </Form.Group>
         {formData.map((q, ind) => {
           return (
@@ -61,7 +62,9 @@ function SurveyCreatorComponent(props) {
 
 
 SurveyCreatorComponent.propTypes = {
-  onAddSurvey: PropTypes.func
+  onAddSurvey: PropTypes.func,
+  surveyToEdit: PropTypes.object,
+  initialState: PropTypes.array
 }
 
 export default SurveyCreatorComponent;

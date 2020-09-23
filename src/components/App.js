@@ -51,9 +51,21 @@ function App() {
     setDisplay(d.LANDING_PAGE);
   }
 
+  const buildEditObject = (survey) => {
+    if (survey) {
+      const objArr = [];
+      for (let i = 0; i < selectedSurvey.questions.length; i++) {
+        objArr.push({ id: `question${i+1}`, value: selectedSurvey.questions[i] });
+      }
+      return objArr;
+    } else {
+      return [];
+    }
+  }
+
   let pageToDisplay;
   if (display === d.CREATE) {
-    pageToDisplay = <SurveyCreatorComponent onAddSurvey={handleAddSurvey} />
+    pageToDisplay = <SurveyCreatorComponent onAddSurvey={handleAddSurvey} surveyToEdit={selectedSurvey} initialState = {buildEditObject(selectedSurvey)} />
   } else if (display === d.SURVEY_LIST) {
     pageToDisplay = <SurveyList onDeleteSurvey={handleDeleteSurvey}/>
   } else if (display === d.SURVEY) {
