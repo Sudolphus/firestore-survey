@@ -3,24 +3,44 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 function SurveyCreatorComponent() {
-  const [questionsToAsk, setQuestionsToAsk] = useState([1]);
+  const [questionsToAsk, setQuestionsToAsk] = useState(1);
+  const [formData, setFormData] = useState([])
   
   const addQuestionToSurvey = () => {
-    setQuestionsToAsk([...questionsToAsk, questionsToAsk[questionsToAsk.length-1]+1]);
+    setQuestionsToAsk(questionsToAsk + 1);
+    const newInput = { id: `question${questionsToAsk}`, value: ''};
+    setFormData([...formData, newInput]);
   }
+
+  const onChange = (element, index) => {
+    setFormData([
+      ...formData.slice(0, index),
+      {...formData[index], value : element.target.value},
+      ...formData.slice(index+1)
+    ]);
+  }
+
+  const onSubmittingSurvey = (event) => {
+    event.preventDefault();
+    const title = event.target.title.value;
+    const questions = [];
+    formData.map(x => questions.push(x.value));
+    console.log({title, questions});
+  }
+  
 
   return (
     <React.Fragment>
-      <Form>
+      <Form onSubmit = {onSubmittingSurvey}>
         <Form.Group controlId = 'title'>
           <Form.Label>Title for your survey</Form.Label>
           <Form.Control type='text' />
         </Form.Group>
-        {questionsToAsk.map(ind => {
+        {formData.map((q, ind) => {
           return (
-            <Form.Group controlId = {`question${ind}`} key={`question${ind}`}>
+            <Form.Group controlId = {q.id} key={q.id}>
               <Form.Label>What Question Do You Want To Ask</Form.Label>
-              <Form.Control type='text' />
+              <Form.Control type='text' value={q.value} onChange={elem => onChange(elem,ind)}/>
             </Form.Group>
           )
         })}
