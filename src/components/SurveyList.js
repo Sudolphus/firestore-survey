@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useReducer} from 'react';
 import PropTypes from 'prop-types';
 import * as d from './DisplayTypes';
 import Button from 'react-bootstrap/Button';
 
 function SurveyList(props) {
-  const { surveys, user, onChangingSurvey, onClickingLink } = props;
+  const { surveys, user, onChangingSurvey, onClickingLink, onDeleteSurvey } = props;
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
+
+  const onDeleteClick = (id) => {
+    onDeleteSurvey(id);
+    forceUpdate();
+  }
 
   const handleSurveyResult = (surveyId) => {
     const selectedSurvey = surveys.filter(survey => survey['surveyId'] === surveyId)[0];
@@ -20,7 +26,13 @@ function SurveyList(props) {
     }
   }
   const editButton = user ? <Button variant='warning' type='button'>Edit</Button> : null;
-  const deleteButton = user ? <Button variant='danger' type='button'>Delete</Button> : null;
+  const deleteButton= (surveyId) => {
+    if (user) {
+      return <Button variant='danger' type='button' onClick={()=>onDeleteClick(surveyId)}>Delete</Button>
+    } else {
+      return null;
+    }
+  }
 
   return (
     <React.Fragment>
@@ -30,7 +42,7 @@ function SurveyList(props) {
           <Button>{survey.title}</Button>
           {resultsButtonCalc(survey.surveyId)}
           {editButton}
-          {deleteButton}
+          {deleteButton(survey.surveyId)}
         </li>
       )}
       </ol>
@@ -42,7 +54,8 @@ SurveyList.propTypes = {
   surveys: PropTypes.arrayOf(Object),
   user: PropTypes.bool,
   onClickingLink: PropTypes.func,
-  onChangingSurvey: PropTypes.func
+  onChangingSurvey: PropTypes.func,
+  onDeleteSurvey: PropTypes.func
 }
 
 export default SurveyList;

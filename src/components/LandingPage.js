@@ -22,6 +22,7 @@ function LandingPage(props) {
             user={true}
             onChangingSurvey={props.onChangingSurvey}
             onClickingLink={props.onClickingLink}
+            onDeleteSurvey ={props.onDeleteSurvey}
             />
         </Col>
         <Col>
@@ -37,7 +38,8 @@ function LandingPage(props) {
 LandingPage.propTypes = {
   surveys: PropTypes.array,
   onClickingLink: PropTypes.func,
-  onChangingSurvey: PropTypes.func
+  onChangingSurvey: PropTypes.func,
+  onDeleteSurvey: PropTypes.func
 }
 
 export default LandingPage;

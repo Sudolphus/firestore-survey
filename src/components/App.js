@@ -44,11 +44,18 @@ function App() {
     setSelectedSurvey(null);
   }
 
+  const handleDeleteSurvey = (id) => {
+    const newSurveyArray = surveys.filter(survey => survey.surveyId !== id);
+    surveys = [...newSurveyArray];
+    console.log(surveys);
+    setDisplay(d.LANDING_PAGE);
+  }
+
   let pageToDisplay;
   if (display === d.CREATE) {
     pageToDisplay = <SurveyCreatorComponent onAddSurvey={handleAddSurvey} />
   } else if (display === d.SURVEY_LIST) {
-    pageToDisplay = <SurveyList />
+    pageToDisplay = <SurveyList onDeleteSurvey={handleDeleteSurvey}/>
   } else if (display === d.SURVEY) {
     pageToDisplay = <Survey />
   } else if (display === d.SURVEY_RESULT) {
@@ -59,7 +66,8 @@ function App() {
     pageToDisplay = <LandingPage
                       surveys = {surveys}
                       onClickingLink={setDisplay}
-                      onChangingSurvey={setSelectedSurvey} />  
+                      onChangingSurvey={setSelectedSurvey}
+                      onDeleteSurvey={handleDeleteSurvey} />  
   }
   
   return (
