@@ -1,10 +1,12 @@
 import React, {useState} from "react";
+import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function SurveyCreatorComponent() {
+function SurveyCreatorComponent(props) {
   const [questionsToAsk, setQuestionsToAsk] = useState(1);
-  const [formData, setFormData] = useState([])
+  const [formData, setFormData] = useState([]);
+  //const [surveyIdCounter, setSurveyId] = useState(1);
   
   const addQuestionToSurvey = () => {
     setQuestionsToAsk(questionsToAsk + 1);
@@ -25,7 +27,13 @@ function SurveyCreatorComponent() {
     const title = event.target.title.value;
     const questions = [];
     formData.map(x => questions.push(x.value));
-    console.log({title, questions});
+    const newSurvey = {
+      title,
+      questions,
+      answers: [],
+      user: 'user1',
+    }
+    props.onAddSurvey(newSurvey);
   }
   
 
@@ -50,5 +58,10 @@ function SurveyCreatorComponent() {
     </React.Fragment>
   );
 };
+
+
+SurveyCreatorComponent.propTypes = {
+  onAddSurvey: PropTypes.func
+}
 
 export default SurveyCreatorComponent;
