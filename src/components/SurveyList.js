@@ -1,19 +1,21 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import * as d from './DisplayTypes';
 import Button from 'react-bootstrap/Button';
 
 function SurveyList(props) {
-  const { surveys, user, onChangingSurvey, onClickingLink, onDeleteSurvey } = props;
-
-  // useEffect(() => {
-  //   const updatedSurveys = surveys;
-  // });
+  const { surveys, user, onChangingSurvey, onClickingLink, onDeleteSurvey} = props;
 
   const onEditClick = (id) => {
     const surveyToEdit = surveys.filter(survey => survey.surveyId === id)[0];
     onChangingSurvey(surveyToEdit);
     onClickingLink(d.CREATE);
+  }
+
+  const onTakingSurveyClick = (id) => {
+    const surveyToTake = surveys.filter(survey => survey.surveyId === id)[0];
+    onChangingSurvey(surveyToTake);
+    onClickingLink(d.SURVEY);
   }
 
   const handleSurveyResult = (surveyId) => {
@@ -46,15 +48,24 @@ function SurveyList(props) {
     }
   }
 
+  const takeSurveyButton = (surveyId) => {
+    if (!user) {
+      return <Button variant='info' type='button' onClick={()=>onTakingSurveyClick(surveyId)}>Take Survey</Button>
+    } else {
+      return null;
+    }
+  }
+
   return (
     <React.Fragment>
       <ol>
       {surveys.map((survey) =>
         <li key={survey.surveyId}>
-          <Button>{survey.title}</Button>
+          {survey.title}
           {resultsButton(survey.surveyId)}
           {editButton(survey.surveyId)}
           {deleteButton(survey.surveyId)}
+          {takeSurveyButton(survey.surveyId)}
         </li>
       )}
       </ol>

@@ -33,7 +33,10 @@ function LandingPage(props) {
         <Col>
           <SurveyList 
             surveys={otherSurveys}
-            user={false} />
+            user={false} 
+            onChangingSurvey={props.onChangingSurvey}
+            onClickingLink={props.onClickingLink}
+            />
         </Col>
       </Row>
     </React.Fragment>
@@ -44,7 +47,8 @@ LandingPage.propTypes = {
   surveys: PropTypes.array,
   onClickingLink: PropTypes.func,
   onChangingSurvey: PropTypes.func,
-  onDeleteSurvey: PropTypes.func
+  onDeleteSurvey: PropTypes.func,
+  onTakingSurvey: PropTypes.func
 }
 
 export default LandingPage;

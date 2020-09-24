@@ -25,7 +25,7 @@ const survey2 = {
 
 const survey3 = {
   title: 'Test Survey3',
-  questions: ['Question 1', 'Question 2', 'Question 3'],
+  questions: ['What is your first name', 'What is your last name', 'Question 3'],
   answers: [['answer1', 'answer2'], ['test2', 'test3'], ['Xorbatrone']],
   user: 'user3',
   surveyId: 3
@@ -67,13 +67,33 @@ function App() {
     }
   }
 
+  const buildInitialQuestions = (survey) => {
+    if (survey) {
+      return survey.questions.length + 1;
+    } else {
+      return 1;
+    }
+  }
+
+  const buildTakeSurveyObject = (survey) => {
+    const objArr = [];
+    for (let i = 0; i < survey.questions.length; i++) {
+      objArr.push({ id: `question${i+1}`, question: survey.questions[i], userAnswer: ''});
+    }
+    return objArr;
+  }
+
   let pageToDisplay;
   if (display === d.CREATE) {
-    pageToDisplay = <SurveyCreatorComponent onAddSurvey={handleAddSurvey} surveyToEdit={selectedSurvey} initialState = {buildEditObject(selectedSurvey)} />
+    pageToDisplay = <SurveyCreatorComponent onAddSurvey={handleAddSurvey} surveyToEdit={selectedSurvey} initialQuestions={buildInitialQuestions(selectedSurvey)} initialState = {buildEditObject(selectedSurvey)} />
   } else if (display === d.SURVEY_LIST) {
     pageToDisplay = <SurveyList onDeleteSurvey={handleDeleteSurvey}/>
   } else if (display === d.SURVEY) {
-    pageToDisplay = <Survey />
+    pageToDisplay = <Survey 
+                      // onTakingSurvey={handleTakeSurvey} 
+                      surveyToTake={selectedSurvey}
+                      surveyState={buildTakeSurveyObject(selectedSurvey)}
+                    />
   } else if (display === d.SURVEY_RESULT) {
     pageToDisplay = <SurveyResults 
                       survey={selectedSurvey}
