@@ -12,11 +12,16 @@ function LandingPage(props) {
   const userSurveys = surveys.filter(survey => survey['user'] === user);
   const otherSurveys = surveys.filter(survey => survey['user'] !== user);
   
+  const onCreateClick = () => {
+    props.onChangingSurvey(null);
+    props.onClickingLink(d.CREATE);
+  }
+
   return (
     <React.Fragment>
       <Row>
         <Col>
-          <Button variant='info' type='button' onClick={()=>{props.onClickingLink(d.CREATE)}}>Create a Survey!</Button>
+          <Button variant='info' type='button' onClick={onCreateClick}>Create a Survey!</Button>
           <SurveyList 
             surveys={userSurveys}
             user={true}

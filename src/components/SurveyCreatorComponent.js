@@ -27,12 +27,20 @@ function SurveyCreatorComponent(props) {
     event.preventDefault();
     const title = event.target.title.value;
     const questions = [];
-    formData.map(x => questions.push(x.value));
+    const answers = [];
+
+    formData.map(x => {
+      questions.push(x.value) 
+      answers.push([]);
+      return null;
+    });
+
     const newSurvey = {
       title,
       questions,
-      answers: [],
+      answers,
       user: 'user1',
+      surveyId: surveyToEdit ? surveyToEdit.surveyId : null
     }
     props.onAddSurvey(newSurvey);
   }

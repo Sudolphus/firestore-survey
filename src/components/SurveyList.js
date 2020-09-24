@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import * as d from './DisplayTypes';
 import Button from 'react-bootstrap/Button';
@@ -6,6 +6,9 @@ import Button from 'react-bootstrap/Button';
 function SurveyList(props) {
   const { surveys, user, onChangingSurvey, onClickingLink, onDeleteSurvey } = props;
 
+  // useEffect(() => {
+  //   const updatedSurveys = surveys;
+  // });
 
   const onEditClick = (id) => {
     const surveyToEdit = surveys.filter(survey => survey.surveyId === id)[0];

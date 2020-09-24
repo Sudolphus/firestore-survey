@@ -38,8 +38,13 @@ function App() {
   const [selectedSurvey, setSelectedSurvey] = useState(null);
 
   const handleAddSurvey = (newSurvey) => {
-    newSurvey = {...newSurvey, surveyId: surveys.length + 1}
-    surveys = [...surveys, newSurvey];
+    if (newSurvey.surveyId === null) {
+      newSurvey = {...newSurvey, surveyId: surveys.length + 1}
+      surveys = [...surveys, newSurvey];
+    } else {
+      const newSurveyArray = surveys.map(survey => {return survey.surveyId === newSurvey.surveyId ? newSurvey : survey});
+      surveys = [...newSurveyArray];
+    }
     setDisplay(d.LANDING_PAGE);
     setSelectedSurvey(null);
   }
@@ -47,7 +52,6 @@ function App() {
   const handleDeleteSurvey = (id) => {
     const newSurveyArray = surveys.filter(survey => survey.surveyId !== id);
     surveys = [...newSurveyArray];
-    console.log(surveys);
     setDisplay(d.LANDING_PAGE);
   }
 
